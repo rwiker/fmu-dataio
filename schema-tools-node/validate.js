@@ -38,8 +38,9 @@ async function main() {
   const schema = await schemaresp.json();
 
   let ajv = new Ajv2020({
+    strict: true,
     keywords: ["$contractual"],
-    loadSchema: (uri) => fetch(uri).then((res) => res.json()),
+    xxxloadSchema: (uri) => fetch(uri).then((res) => res.json()),
   });
   addFormats(ajv);
 
