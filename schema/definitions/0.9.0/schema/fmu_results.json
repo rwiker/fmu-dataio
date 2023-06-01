@@ -1060,7 +1060,7 @@
           },
           "description": {
             "description": "This is a free text description of the model setup",
-            "$ref": "#/definitions/generic/_description"
+            "$ref": "#/$defs/generic/_description"
           }
         }
       },
@@ -1089,11 +1089,11 @@
             ]
           },
           "uuid": {
-            "$ref": "#/definitions/generic/uuid"
+            "$ref": "#/$defs/generic/uuid"
           },
           "user": {
             "description": "The user name used in ERT",
-            "$ref": "#/definitions/generic/user"
+            "$ref": "#/$defs/generic/user"
           },
           "restart_from": {
             "description": "A reference to another case/iteration that this iteration was restarted from",
@@ -1101,7 +1101,7 @@
             "type": "string"
           },
           "description": {
-            "$ref": "#/definitions/generic/_description"
+            "$ref": "#/$defs/generic/_description"
           }
         }
       },
@@ -1128,7 +1128,7 @@
             ]
           },
           "uuid": {
-            "$ref": "#/definitions/generic/uuid"
+            "$ref": "#/$defs/generic/uuid"
           }
         }
       },
@@ -1156,7 +1156,7 @@
             ]
           },
           "uuid": {
-            "$ref": "#/definitions/generic/uuid"
+            "$ref": "#/$defs/generic/uuid"
           },
           "parameters": {
             "type": "object",
