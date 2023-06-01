@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "fmu_results.json",
+  "$id": "https://fmu-schemas.app.radix.equinor.com/schemas/0.9.0/fmu_results.json",
   "type": "object",
   "$contractual": [
     "class",
@@ -139,13 +139,23 @@
 	      "type": "object",
               "required": [
                 "realization"
-              ]
+              ],
+	      "properties": {
+		"realization": {
+		  "$ref": "#/$defs/fmu/realization"
+		}
+	      }
             },
             {
 	      "type": "object",
               "required": [
                 "aggregation"
-              ]
+              ],
+	      "properties": {
+		"aggregation": {
+		  "$ref": "#/$defs/fmu/aggregation"
+		}
+	      }
             }
           ],
           "properties": {
@@ -158,14 +168,8 @@
             "iteration": {
               "$ref": "#/$defs/fmu/iteration"
             },
-            "realization": {
-              "$ref": "#/$defs/fmu/realization"
-            },
             "workflow": {
               "$ref": "#/$defs/fmu/workflow"
-            },
-            "aggregation": {
-              "$ref": "#/$defs/fmu/aggregation"
             }
           }
         },
@@ -185,7 +189,34 @@
                   "properties": {
                     "content": {
                       "const": "fluid_contact"
-                    }
+                    },
+		    "fluid_contact": {
+		      "type": "object",
+		      "description": "Conditional field",
+		      "properties": {
+			"contact": {
+			  "type": "string",
+			  "enum": [
+			    "owc",
+			    "fwl",
+			    "goc",
+			    "fgl"
+			  ],
+			  "$comment": "Not sure if wise to enum this",
+			  "examples": [
+			    "owc",
+			    "fwl"
+			  ]
+			},
+			"truncated": {
+			  "type": "boolean",
+			  "$comment": "Is this contact surface truncated to the stratigraphy?",
+			  "examples": [
+			    true
+			  ]
+			}
+		      }
+		    }
                   }
                 },
                 {
@@ -210,7 +241,19 @@
                   "properties": {
                     "content": {
                       "const": "field_outline"
-                    }
+                    },
+		    "field_outline": {
+		      "description": "Conditional field",
+		      "type": "object",
+		      "required": [
+			"contact"
+		      ],
+		      "properties": {
+			"contact": {
+			  "type": "string"
+			}
+		      }
+		    }
                   }
                 },
                 {
@@ -235,7 +278,37 @@
                   "properties": {
                     "content": {
                       "const": "seismic"
-                    }
+                    },
+		    "seismic": {
+		      "type": "object",
+		      "description": "Conditional field",
+		      "properties": {
+			"attribute": {
+			  "type": "string",
+			  "examples": [
+			    "amplitude_timeshifted"
+			  ]
+			},
+			"zrange": {
+			  "type": "number",
+			  "examples": [
+			    12
+			  ]
+			},
+			"filter_size": {
+			  "type": "number",
+			  "examples": [
+			    1
+			  ]
+			},
+			"scaling_factor": {
+			  "type": "number",
+			  "examples": [
+			    1
+			  ]
+			}
+		      }
+		    }
                   }
                 },
                 {
@@ -256,8 +329,44 @@
 	  "type": "object",
           "required": [
             "asset",
-            "ssdl"
-          ]
+	    "ssdl"
+          ],
+	  "properties": {
+	    "asset": {
+	      "type": "object",
+	      "properties": {
+		"name": {
+		  "type": "string"
+		}
+	      }
+	    },
+            "ssdl": {
+              "type": "object",
+              "$comment": "Required for data objects",
+              "required": [
+		"access_level",
+		"rep_include"
+              ],
+              "properties": {
+		"access_level": {
+		  "$comment": "Who should SSDL be allowed to share this further with?",
+		  "type": "string",
+		  "enum": [
+                    "internal",
+                    "asset"
+		  ]
+		},
+		"rep_include": {
+		  "$comment": "Should REP display this data?",
+		  "type": "boolean",
+		  "examples": [
+                    true,
+                    false
+		  ]
+		}
+              }
+            }
+	  }
         }
       }
     }
@@ -427,6 +536,7 @@
         },
         "top": {
           "$comment": "To be used if data object is an interval",
+	  "type": "object",
           "properties": {
             "name": {
               "$ref": "#/$defs/data/properties/name"
@@ -704,77 +814,8 @@
             true
           ]
         },
-        "fluid_contact": {
-          "type": "object",
-          "description": "Conditional field",
-          "properties": {
-            "contact": {
-              "type": "string",
-              "enum": [
-                "owc",
-                "fwl",
-                "goc",
-                "fgl"
-              ],
-              "$comment": "Not sure if wise to enum this",
-              "examples": [
-                "owc",
-                "fwl"
-              ]
-            },
-            "truncated": {
-              "type": "boolean",
-              "$comment": "Is this contact surface truncated to the stratigraphy?",
-              "examples": [
-                true
-              ]
-            }
-          }
-        },
-        "field_outline": {
-          "description": "Conditional field",
-          "type": "object",
-          "required": [
-            "contact"
-          ],
-          "properties": {
-            "contact": {
-              "type": "string"
-            }
-          }
-        },
         "description": {
           "$ref": "#/$defs/generic/_description"
-        },
-        "seismic": {
-          "type": "object",
-          "description": "Conditional field",
-          "properties": {
-            "attribute": {
-              "type": "string",
-              "examples": [
-                "amplitude_timeshifted"
-              ]
-            },
-            "zrange": {
-              "type": "number",
-              "examples": [
-                12
-              ]
-            },
-            "filter_size": {
-              "type": "number",
-              "examples": [
-                1
-              ]
-            },
-            "scaling_factor": {
-              "type": "number",
-              "examples": [
-                1
-              ]
-            }
-          }
         }
       }
     },
@@ -910,32 +951,6 @@
               "type": "string",
               "examples": [
                 "Drogon"
-              ]
-            }
-          }
-        },
-        "ssdl": {
-          "type": "object",
-          "$comment": "Required for data objects",
-          "required": [
-            "access_level",
-            "rep_include"
-          ],
-          "properties": {
-            "access_level": {
-              "$comment": "Who should SSDL be allowed to share this further with?",
-              "type": "string",
-              "enum": [
-                "internal",
-                "asset"
-              ]
-            },
-            "rep_include": {
-              "$comment": "Should REP display this data?",
-              "type": "boolean",
-              "examples": [
-                true,
-                false
               ]
             }
           }
