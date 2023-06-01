@@ -122,10 +122,9 @@
             "const": "fmu"
         },
         "version": {
-            "$comment": "Must always be on root level.",
+            "$comment": "Must always be on root level.\nThis is 0.8.0, so require version to be == 0.8.0",
             "title": "FMU results metadata version",
             "type": "string",
-            "$comment": "This is 0.8.0, so require version to be == 0.8.0",
             "enum": [
                 "0.8.0"
             ],
@@ -176,9 +175,9 @@
                     ]
                 },
                 "stratigraphic": {
-                    "$comment": "Determines of validation against strat column should happen or not",
+                    "$comment": "Determines if validation against strat column should happen or not",
                     "type": "boolean",
-                    "description": "True of surface represents an entity in the stratigraphic column",
+                    "description": "True if surface represents an entity in the stratigraphic column",
                     "examples": [
                         true
                     ]
@@ -196,8 +195,7 @@
                     }
                 },
                 "offset": {
-                    "$comment": "To be used if data represents an offset from the specified name",
-                    "$comment": "e.g. a surface representing an offset from a known horizon",
+                    "$comment": "To be used if data represents an offset from the specified name\ne.g. a surface representing an offset from a known horizon",
                     "type": "number",
                     "example": 11.2
                 },
@@ -1012,11 +1010,7 @@
                     "id": {
                         "type": "string",
                         "description": "The ID of this aggregation",
-                        "$comment": "Used for tying together representations of the same entity",
-                        "$comment": "Example: Statistics for various time steps of the same surface",
-                        "$comment": "Not used in Drogon but widely used on e.g. Johan Sverdrup",
-                        "$comment": "Used for enabling common display and joint visual settings",
-                        "$comment": "A unique uuid is currently used, and included as example but any ID should be sufficient",
+                        "$comment": "Used for tying together representations of the same entity\nExample: Statistics for various time steps of the same surface\nNot used in Drogon but widely used on e.g. Johan Sverdrup\nUsed for enabling common display and joint visual settings\nA unique uuid is currently used, and included as example but any ID should be sufficient",
                         "examples": [
                             "15ce3b84-766f-4c93-9050-b154861f9100"
                         ]
@@ -1026,8 +1020,7 @@
         },
         "file": {
             "description": "Block describing the file as the data appear in FMU context",
-            "$comment": "While the file may seize to exist, the concept is still useful",
-            "$comment": "A lot of logic exists on top of the file name now, legacy but not likely to disappear soon",
+            "$comment": "While the file may cease to exist, the concept is still useful\nA lot of logic exists on top of the file name now, legacy but not likely to disappear soon",
             "type": "object",
             "required": [
                 "relative_path",
@@ -1058,10 +1051,7 @@
             }
         }
     },
-    "$comment": "DEFINITIONS END HERE",
-    "$comment": "oneOf below reflects different structures depending on type",
-    "$comment": "The fmu-block is different for cases and data objects,",
-    "$comment": "and the data block is only present for data objects.",
+    "$comment": "DEFINITIONS END HERE\noneOf below reflects different structures depending on type\nThe fmu-block is different for cases and data objects,\nand the data block is only present for data objects.",
     "required": [
         "source",
         "version",
@@ -1143,14 +1133,13 @@
                 },
                 "fmu": {
                     "description": "The FMU block records properties that are specific to FMU",
-                    "$comment": "This is the fmu block as it appears in data objects",
+                    "$comment": "This is the fmu block as it appears in data objects\nData objects can be either realization or aggregation - never both.",
                     "required": [
                         "model",
                         "case",
                         "iteration",
                         "workflow"
                     ],
-                    "$comment": "Data objects can be either realization or aggregation - never both.",
                     "oneOf": [
                         {
                             "required": [
