@@ -1,6 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "fmu_results.json",
+  "type": "object",
   "$contractual": [
     "class",
     "source",
@@ -70,6 +71,7 @@
   "oneOf": [
     {
       "$comment": "Valid when class == case)",
+      "type": "object",
       "properties": {
         "class": {
           "const": "case"
@@ -92,14 +94,26 @@
           }
         },
         "access": {
+	  "type": "object",
           "required": [
             "asset"
-          ]
+          ],
+	  "properties": {
+	    "asset": {
+	      "type": "object",
+	      "properties": {
+		"name": {
+		  "type": "string"
+		}
+	      }
+	    }
+	  }
         }
       }
     },
     {
       "$comment": "Valid when class != case",
+      "type": "object",
       "required": [
         "data",
         "file"
@@ -113,6 +127,7 @@
         "fmu": {
           "description": "The FMU block records properties that are specific to FMU",
           "$comment": "This is the fmu block as it appears in data objects\nData objects can be either realization or aggregation - never both.",
+	  "type": "object",
           "required": [
             "model",
             "case",
@@ -121,11 +136,13 @@
           ],
           "oneOf": [
             {
+	      "type": "object",
               "required": [
                 "realization"
               ]
             },
             {
+	      "type": "object",
               "required": [
                 "aggregation"
               ]
@@ -161,6 +178,7 @@
             {
               "oneOf": [
                 {
+		  "type": "object",
                   "required": [
                     "fluid_contact"
                   ],
@@ -171,6 +189,7 @@
                   }
                 },
                 {
+		  "type": "object",
                   "properties": {
                     "content": {
                       "not": {
@@ -184,6 +203,7 @@
             {
               "oneOf": [
                 {
+		  "type": "object",
                   "required": [
                     "field_outline"
                   ],
@@ -194,6 +214,7 @@
                   }
                 },
                 {
+		  "type": "object",
                   "properties": {
                     "content": {
                       "not": {
@@ -207,6 +228,7 @@
             {
               "oneOf": [
                 {
+		  "type": "object",
                   "required": [
                     "seismic"
                   ],
@@ -217,6 +239,7 @@
                   }
                 },
                 {
+		  "type": "object",
                   "properties": {
                     "content": {
                       "not": {
@@ -230,6 +253,7 @@
           ]
         },
         "access": {
+	  "type": "object",
           "required": [
             "asset",
             "ssdl"
@@ -306,7 +330,7 @@
     "class": {
       "title": "Metadata class",
       "type": "string",
-      "example": "surface",
+      "examples": ["surface"],
       "enum": [
         "case",
         "surface",
@@ -329,7 +353,7 @@
       "$comment": "Must always be on root level.\nThis is 0.9.0, so require version to be == 0.9.0",
       "title": "FMU results metadata version",
       "type": "string",
-      "example": "1.2.3",
+      "examples": ["1.2.3"],
       "const": "0.9.0"
     },
     "tracklog_event": {
@@ -399,7 +423,7 @@
         "offset": {
           "$comment": "To be used if data represents an offset from the specified name\ne.g. a surface representing an offset from a known horizon",
           "type": "number",
-          "example": 11.2
+          "examples": [11.2]
         },
         "top": {
           "$comment": "To be used if data object is an interval",
@@ -417,6 +441,7 @@
         },
         "base": {
           "$comment": "To be used if data object is an interval",
+	  "type": "object",
           "properties": {
             "name": {
               "$ref": "#/$defs/data/properties/name"
@@ -1160,10 +1185,7 @@
           },
           "parameters": {
             "type": "object",
-            "description": "Parameters for this realization",
-            "items": {
-              "type": "object"
-            }
+            "description": "Parameters for this realization"
           },
           "jobs": {
             "type": "object",
@@ -1198,10 +1220,7 @@
           },
           "parameters": {
             "type": "object",
-            "description": "Parameters for this realization",
-            "items": {
-              "type": "object"
-            }
+            "description": "Parameters for this realization"
           },
           "id": {
             "type": "string",
